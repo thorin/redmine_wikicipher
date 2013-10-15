@@ -1,5 +1,5 @@
 ru:
-  redmine_wikicipher:
+  wikicipher:
     coded: "Текст зашифрован"
     decode: "Дешифровать"
     encode: "Зашифровать"

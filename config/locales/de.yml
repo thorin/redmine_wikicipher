@@ -1,5 +1,5 @@
 de:
-  redmine_wikicipher:
+  wikicipher:
     coded: "Dieser Text ist verschlüsselt"
     decode: "Entschlüsseln"
     encode: "Verschlüsseln"

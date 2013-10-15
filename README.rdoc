@@ -4,24 +4,24 @@ The Redmine Wikicipher plugin allows to encrypt sections of the Wiki
 
 == Compatibility
 
-This plugin works (has been tested) with redmine v1.4.x and redmine v2.2.x. 
+This plugin works (has been tested) with redmine v2.3.x.
+
 == Installation
 
 * Place the plugin into  +/path/to/redmine/vendor/plugins+ . The name of the plugin's directory/folder should be *redmine_wikicipher*.
 * Change directory to +/path/to/redmine/+ .
-* Update the "database_cipher_key" configuration located in +/path/to/redmine/config/configuration.yml file with some random key (this key will be used to cipher/decipher the wiki content)
-* For redmine v2.2.x, edit the application.rb file (+/path/to/redmine/config/application.rb+), adding ":text" to the filter parameters (config.filter_parameters += [:password, :text]).
+* Edit the application.rb file (+/path/to/redmine/config/application.rb+), adding ":values" to the filter parameters (config.filter_parameters += [:password, :values]).
 * Restart redmine.
 
 == How to change the cipher key
 
-The key used to encrypt is based on the "database_cipher_key" configuration in the +/path/to/redmine/config/configuration.yml+ file.
-To modify the key, update the +/path/to/redmine/config/configuration.yml+ file, run the script +/path/to/wikicipherplugin/bin/updatekey.rb+, passing the old key and the new key as parameters and restart redmine.
+The key used to encrypt is based on the *Secret key* value in the plugin's settings page.
+To modify the key, update *Secret key* value, run the rake command `rake redmine:plugins:wikicipher:updatekey[old_key, new_key] RAILS_ENV=production` and restart redmine.
 
 == How to remove the encryption
 
-The key used to encrypt is based on the "database_cipher_key" configuration in the +/path/to/redmine/config/configuration.yml+ file.
-To modify the key, update the +/path/to/redmine/config/configuration.yml+ file, setting the 'database_cipher_key' as empty , run the script +/path/to/wikicipherplugin/bin/updatekey.rb+, passing the old key as parameter and restart redmine.
+The key used to encrypt is based on the *Secret key* value in the plugin's settings page.
+To modify the key, the *Secret key* value, setting the 'database_cipher_key' as empty , run the rake command `rake redmine:plugins:wikicipher:updatekey[old_key] RAILS_ENV=production` and restart redmine.
 
 == License
 

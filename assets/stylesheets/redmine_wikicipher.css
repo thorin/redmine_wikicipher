@@ -1,33 +1,33 @@
-.wikicipher
-{
-background-image: url(../images/contextual/encrypt.png);
-background-repeat: no-repeat;
+.wikicipher {
+	background-image: url(../images/contextual/encrypt.png);
+	background-repeat: no-repeat;
 
-background-color: #DDD;
-padding: 1px;
-}
-.codedLabel
-{
-font-style: italic;
-font-size: 1em;
-color: #333;
-padding-left: 16px;
-border-color: black;
-border-width: 1px;
+	background-color: #DDD;
+	padding: 1px;
+	cursor: pointer;
 }
 
-.wikicipher_content{
-	display:none;
+.coded-label, .wikicipher-content {
+	font-style: italic;
+	font-size: 1em;
+	color: #333;
+	padding-left: 16px;
+	border-color: black;
+	border-width: 1px;
 }
-.wikicipher_head
-{
 
-}
+.wikicipher-content { font-style: normal; font-weight: bold; }
 
-.icon-decrypt{
+.encrypted .wikicipher-content { display:none; }
+
+.decrypted .coded-label { display:none; }
+
+.wikicipher-head { }
+
+.icon-decrypt {
 	background-image: url(../images/contextual/decrypt.png);
 }
 
-.icon-encrypt{
+.icon-encrypt {
 	background-image: url(../images/contextual/encrypt.png);
 }

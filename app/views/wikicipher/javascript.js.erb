@@ -1,0 +1,68 @@
+jQuery(function($) {
+  function decrypt(values) {
+    return $.parseJSON($.ajax({
+      type: 'POST',
+      url: '<%= cipher_decode_path(:project_id => @project) %>',
+      data: { 'values[]' : values },
+      async: false
+    }).responseText);
+  }
+
+  function decryptElement(elem, decrypted) {
+    $(elem)
+      .data('encrypted', $(elem).text())
+      .text(decrypted)
+      .parent().switchClass('encrypted', 'decrypted');
+  }
+
+  function encryptElement(elem) {
+    $(elem)
+      .text($(elem).data('encrypted'))
+      .parent().switchClass('decrypted', 'encrypted');
+  }
+
+  function decryptAllElements(link) {
+    if ($(link).hasClass('icon-decrypt')) {
+      $(link)
+        .switchClass('icon-decrypt', 'icon-encrypt')
+        .attr('href', '#encrypt')
+        .html('<%= l('wikicipher.encode') %>');
+
+      var values = [];
+      $('.encrypted .wikicipher-content').each(function() {
+        values.push($(this).text());
+      });
+
+      values = decrypt(values);
+      $('.encrypted .wikicipher-content').each(function() {
+        decryptElement(this, values.shift());
+      });
+    } else {
+      $(link)
+        .switchClass('icon-encrypt', 'icon-decrypt')
+        .attr('href', '#decrypt')
+        .html('<%= l('wikicipher.decode') %>');
+
+      $('.decrypted .wikicipher-content').each(function() {
+        encryptElement(this);
+      });
+    }
+  }
+
+  $('.wikicipher').click(function() {
+    elem = $(this).children('.wikicipher-content').get(0);
+    if ($(this).hasClass('encrypted')) {
+      decryptElement(elem, decrypt([ $(elem).text() ]));
+    } else {
+      encryptElement(elem);
+    }
+  });
+
+  $('<a class="icon icon-decrypt" href="#decrypt" id="decrypt-link"><%= l('wikicipher.decode') %></a>')
+    .appendTo('#content .contextual:first-child')
+    .click(function (event) { event.preventDefault(); decryptAllElements(this); });
+
+  if (window.location.hash === '#decrypt') {
+    decryptAllElements($('#decrypt-link').get(0));
+  }
+});

@@ -1,4 +1,3 @@
-require 'redmine'
 # encoding: utf-8
 module Wikicipher::Infectors::WikiController
   module InstanceMethods
@@ -12,18 +11,16 @@ module Wikicipher::Infectors::WikiController
       @content = WikiContent.new @page.content_for_version(params[:version]).attributes
       @content.text.gsub!(/\{{cipher\(1\)(.+?)}}/m) { "*#{decrypt $1.strip}*" }
 
-      if params[:format] == 'pdf'
+      case params[:format]
+      when 'pdf'
         @page = WikiPage.new @page.attributes
         @page.content = @content
         send_data(wiki_page_to_pdf(@page, @project), :type => 'application/pdf', :filename => "#{@page.title}.pdf")
-        return
-      elsif params[:format] == 'html'
+      when 'html'
         export = render_to_string :action => 'export', :layout => false
         send_data(export, :type => 'text/html', :filename => "#{@page.title}.html")
-        return
-      elsif params[:format] == 'txt'
+      when 'txt'
         send_data(@content.text, :type => 'text/plain', :filename => "#{@page.title}.txt")
-        return
       end
 
     end

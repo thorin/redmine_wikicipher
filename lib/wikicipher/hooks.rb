@@ -1,4 +1,3 @@
-require 'redmine'
 # encoding: utf-8
 module RedmineWikicipher
   class Hooks < Redmine::Hook::ViewListener

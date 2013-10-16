@@ -17,8 +17,8 @@ jQuery(function($) {
 
   function encryptElement(elem) {
     $(elem)
-      .text($(elem).data('encrypted'))
-      .parent().switchClass('decrypted', 'encrypted');
+      .parent().switchClass('decrypted', 'encrypted')
+      .text($(elem).data('encrypted'));
   }
 
   function decryptAllElements(link) {
@@ -28,12 +28,10 @@ jQuery(function($) {
         .attr('href', '#encrypt')
         .html('<%= l('wikicipher.encode') %>');
 
-      var values = [];
-      $('.encrypted .wikicipher-content').each(function() {
-        values.push($(this).text());
-      });
+      var values = decrypt($('.encrypted .wikicipher-content').map(function() {
+        return $(this).text();
+      }));
 
-      values = decrypt(values);
       $('.encrypted .wikicipher-content').each(function() {
         decryptElement(this, values.shift());
       });

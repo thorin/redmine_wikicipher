@@ -17,8 +17,8 @@ jQuery(function($) {
 
   function encryptElement(elem) {
     $(elem)
-      .text($(elem).data('encrypted'))
-      .parent().switchClass('decrypted', 'encrypted');
+      .parent().switchClass('decrypted', 'encrypted')
+      .text($(elem).data('encrypted'));
   }
 
   function decryptAllElements(link) {

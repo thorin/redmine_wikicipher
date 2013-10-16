@@ -8,9 +8,11 @@ This plugin works (has been tested) with redmine v2.3.x.
 
 == Installation
 
-* Place the plugin into  +/path/to/redmine/vendor/plugins+ . The name of the plugin's directory/folder should be *redmine_wikicipher*.
+* Place the plugin into  +/path/to/redmine/plugins/+ . The name of the plugin's directory/folder should be *redmine_wikicipher*.
 * Change directory to +/path/to/redmine/+ .
-* Edit the application.rb file (+/path/to/redmine/config/application.rb+), adding ":values" to the filter parameters (config.filter_parameters += [:password, :values]).
+* Edit the environment configuration file (eg, +/path/to/redmine/config/environments/production.rb+) ,  to add +:values+ to the filtered parameters:
+    config.filter_parameters += [:values].
+
 * Restart redmine.
 
 == How to change the cipher key
@@ -23,7 +25,7 @@ To modify the key, update *Secret* *key* value and run the rake command:
 == How to remove the encryption
 
 The key used to encrypt is based on the *Secret* *key* value in the plugin's settings page.
-To modify the key, update the *Secret* *key* value, setting it as empty and run the rake command:
+To modify the key, update the *Secret* *key* value, by setting it as empty and run the rake command:
 
   rake redmine:plugins:wikicipher:updatekey[old_key] RAILS_ENV=production
 

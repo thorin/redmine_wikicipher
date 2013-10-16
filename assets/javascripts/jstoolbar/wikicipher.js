@@ -8,9 +8,8 @@ jsToolBar.prototype.elements.wikicipher = {
   }
 }
 
-window.onload=function(){
-	var warn = document.getElementsByClassName('flash warning');
-	if (warn.length>0){
-		jQuery('.jstb_wikicipher').hide();
+jQuery(function($){
+	if ($('.flash.warning').length > 0){
+		$('.jstb_wikicipher').hide();
 	}
-};
+});

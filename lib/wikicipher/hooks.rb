@@ -8,7 +8,7 @@ module RedmineWikicipher
     end
 
     def view_layouts_base_body_bottom(context={})
-        if context[:controller].is_a? WikiController
+        if context[:controller].is_a?(WikiController) && context[:project]
             javascript_include_tag cipher_javascript_path(:project_id => context[:project])
         end
     end

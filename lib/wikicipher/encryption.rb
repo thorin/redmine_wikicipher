@@ -15,7 +15,8 @@ module Wikicipher::Encryption
 
   def encrypt(originalText)
     cipher = OpenSSL::Cipher::Cipher.new 'DES-EDE3-CBC'
-    cipher.encrypt secret_key
+    cipher.pkcs5_keyivgen(secret_key)
+    cipher.encrypt
     s = cipher.update originalText
     s << cipher.final
 
@@ -24,10 +25,10 @@ module Wikicipher::Encryption
 
   def decrypt(encodedContent)
     cipher = OpenSSL::Cipher::Cipher.new 'DES-EDE3-CBC'
-    cipher.decrypt secret_key
-    s = encodedContent.to_a.pack("H*").unpack("C*").pack("c*")
+    cipher.pkcs5_keyivgen(secret_key)
+    cipher.decrypt
+    s = encodedContent.lines.to_a.pack("H*").unpack("C*").pack("c*")
     s = cipher.update s
-
     s << cipher.final
   end
 

@@ -1,5 +1,5 @@
 # encoding: utf-8
-module RedmineWikicipher
+module Wikicipher
   class Hooks < Redmine::Hook::ViewListener
     def view_layouts_base_html_head(context={})
         if context[:controller].is_a?(WikiController)

@@ -1,6 +1,8 @@
 class WikicipherController < ApplicationController
   include Wikicipher::Encryption
 
+  protect_from_forgery :except => :javascript
+
   def decode
     respond_to do |format|
       format.json do

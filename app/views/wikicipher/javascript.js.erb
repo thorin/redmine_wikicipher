@@ -16,9 +16,8 @@ jQuery(function($) {
   }
 
   function encryptElement(elem) {
-    $(elem)
-      .parent().switchClass('decrypted', 'encrypted')
-      .text($(elem).data('encrypted'));
+    $(elem).parent().switchClass('decrypted', 'encrypted');
+    $(elem).text($(elem).data('encrypted'));
   }
 
   function decryptAllElements(link) {
@@ -30,7 +29,7 @@ jQuery(function($) {
 
       var values = decrypt($('.encrypted .wikicipher-content').map(function() {
         return $(this).text();
-      }));
+      }).toArray());
 
       $('.encrypted .wikicipher-content').each(function() {
         decryptElement(this, values.shift());
@@ -57,7 +56,7 @@ jQuery(function($) {
   });
 
   $('<a class="icon icon-decrypt" href="#decrypt" id="decrypt-link"><%= l('wikicipher.decode') %></a>')
-    .appendTo('#content .contextual:first-child')
+    .appendTo('#content > .contextual:first-child')
     .click(function (event) { event.preventDefault(); decryptAllElements(this); });
 
   if (window.location.hash === '#decrypt') {

@@ -4,4 +4,4 @@ pt:
     decode: "Decifrar"
     encode: "Cifrar"
     update: "Data de atualização"
-    bad_decrypt: "Error ao decifrar a wiki. Verifique que a chave 'database_cipher_key' no ficheiro de configuração está correcta."
+    bad_decrypt: "Error ao decifrar a wiki. A chave de cifragem pode ter mudado."

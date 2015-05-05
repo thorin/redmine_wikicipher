@@ -24,12 +24,19 @@ module Wikicipher::Infectors::WikiController
       end
 
     end
+
+    def encrypt_ciphers
+      params[:content][:text].gsub! /\{{cipher\(0\)(.+?)}}/m do
+        "{{cipher(1)\n#{encrypt $1.strip}\n}}"
+      end if params[:content][:text]
+    end
   end
   def self.included(receiver) # :nodoc:
     receiver.send(:include, InstanceMethods)
 
     receiver.instance_eval do
       alias_method_chain :show, :wikicipher
+      before_filter :encrypt_ciphers, :only => [:preview, :update]
     end
   end
 end

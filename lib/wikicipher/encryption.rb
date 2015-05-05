@@ -24,12 +24,19 @@ module Wikicipher::Encryption
   end
 
   def decrypt(encodedContent)
+    bytes = encodedContent.lines.to_a.pack("H*").unpack("C*").pack("c*")
     cipher = OpenSSL::Cipher::Cipher.new 'DES-EDE3-CBC'
-    cipher.pkcs5_keyivgen(secret_key)
-    cipher.decrypt
-    s = encodedContent.lines.to_a.pack("H*").unpack("C*").pack("c*")
-    s = cipher.update s
-    s << cipher.final
+    begin
+      cipher.pkcs5_keyivgen(secret_key)
+      cipher.decrypt
+      s = cipher.update bytes
+      s << cipher.final
+    rescue OpenSSL::Cipher::CipherError
+      cipher.reset
+      cipher.decrypt secret_key
+      s = cipher.update bytes
+      s << cipher.final
+    end
   end
 
   def random_key

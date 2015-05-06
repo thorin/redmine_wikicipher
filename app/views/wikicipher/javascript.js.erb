@@ -12,18 +12,18 @@ jQuery(function($) {
     $(elem)
       .data('encrypted', $(elem).text())
       .text(decrypted)
-      .parent().switchClass('encrypted', 'decrypted');
+      .parent().removeClass('encrypted').addClass('decrypted');
   }
 
   function encryptElement(elem) {
-    $(elem).parent().switchClass('decrypted', 'encrypted');
+    $(elem).parent().removeClass('decrypted').addClass('encrypted');
     $(elem).text($(elem).data('encrypted'));
   }
 
   function decryptAllElements(link) {
     if ($(link).hasClass('icon-decrypt')) {
       $(link)
-        .switchClass('icon-decrypt', 'icon-encrypt')
+        .removeClass('icon-decrypt').addClass('icon-encrypt')
         .attr('href', '#encrypt')
         .html('<%= l('wikicipher.encode') %>');
 
@@ -36,7 +36,7 @@ jQuery(function($) {
       });
     } else {
       $(link)
-        .switchClass('icon-encrypt', 'icon-decrypt')
+        .removeClass('icon-encrypt').addClass('icon-decrypt')
         .attr('href', '#decrypt')
         .html('<%= l('wikicipher.decode') %>');
 

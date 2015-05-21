@@ -6,6 +6,7 @@ module Wikicipher::Infectors::WikiController
     def show_with_wikicipher
       return show_without_wikicipher if @page.new_record? || !%w(pdf html txt).include?(params[:format])
       return show_without_wikicipher if params[:version] && !User.current.allowed_to?(:view_wiki_edits, @project)
+      return show_without_wikicipher if @page.content_for_version(params[:version]).nil?
       return show_without_wikicipher unless User.current.allowed_to?(:export_wiki_pages, @project)
 
       @content = WikiContent.new @page.content_for_version(params[:version]).attributes
@@ -13,16 +14,13 @@ module Wikicipher::Infectors::WikiController
 
       case params[:format]
       when 'pdf'
-        @page = WikiPage.new @page.attributes
-        @page.content = @content
-        send_data(wiki_page_to_pdf(@page, @project), :type => 'application/pdf', :filename => "#{@page.title}.pdf")
+        send_file_headers! :type => 'application/pdf', :filename => "#{@page.title}.pdf"
       when 'html'
         export = render_to_string :action => 'export', :layout => false
         send_data(export, :type => 'text/html', :filename => "#{@page.title}.html")
       when 'txt'
         send_data(@content.text, :type => 'text/plain', :filename => "#{@page.title}.txt")
       end
-
     end
 
     def encrypt_ciphers
